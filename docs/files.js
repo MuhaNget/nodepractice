@@ -45,14 +45,32 @@ const fs = require('fs');
 
 
 // Deleting Files
-if(fs.existsSync('./deleteme.txt')){
-    fs.unlink('./deleteme.txt', (err) => {
-        if(err){
-            console.log(err);
-        }
-        console.log('File Deleted');
-    })
-}
+// if(fs.existsSync('./deleteme.txt')){
+//     fs.unlink('./deleteme.txt', (err) => {
+//         if(err){
+//             console.log(err);
+//         }
+//         console.log('File Deleted');
+//     })
+// }
+
+
+
+// Streams
+const readStream = fs.createReadStream('./blog1.txt', {encoding: 'utf8'});
+const writeStream = fs.createWriteStream('./blog4.txt');
+
+// readStream.on('data', (chunk)=> {
+//     console.log('---- NEW CHUNK ----');
+//     console.log(chunk);
+//     writeStream.write('\nNEW CHUNK\n');
+//     writeStream.write(chunk);
+// });
+
+// Piping
+readStream.pipe(writeStream);
+
+
 
 
 
