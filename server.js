@@ -61,7 +61,7 @@ const server = http.createServer((req, res)=>{
 
 });
 
-// Starts the server
+// Starts the server or listens for request
 server.listen(3000, 'localhost', ()=>{
     console.log('Listening for request on port 3000');
 });

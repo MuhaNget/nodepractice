@@ -1,40 +1,27 @@
-const fs = require('fs');
-const http = require('http');
+const express = require('express');
 
+// Create an express app
+const app = express();
 
-const server = http.createServer((request, response)=>{
+// Listens for request
+app.listen(2000);
 
-    // Set the headers
-    response.setHeader('Content-Type', 'text/html');
+// Routing and Request type
+app.get('/', (request, response)=>{
+    // response.send('Software Monster');
+    response.sendFile('./views/index.html', { root: __dirname });
+})
 
-    // Routing
-    let path = './templates/';
-    switch(request.url){
-        case '/':
-            path += 'index.html';
-            break;
-        case '/about':
-            path += 'about.html';
-            break;
-        default:
-            path += '404.html';
-            break;
-    }
+app.get('/about', (request, response)=>{
+    response.sendFile('./views/about.html', { root: __dirname });
+})
 
-    // Reading the data or displaying an error
-    fs.readFile(path, (error, data)=>{
-        if(error){
-            console.log(error);
-            response.end();
-        }
-        else {
-            response.write(data);
-            response.end();
-        }
-    });
-});
+// Redirecting
+app.get('/about-me', (request, response)=>{
+    response.redirect('/about');
+})
 
-// Starts the server
-server.listen(3000, 'localhost', ()=>{
-    console.log('Listening for request on port 3000');
+// 404 Page
+app.use((request, response)=>{
+    response.status(404).sendFile('./views/404.html', { root: __dirname });
 })
